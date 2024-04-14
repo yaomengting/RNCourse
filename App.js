@@ -1,20 +1,37 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-
+import { useState } from 'react';
+import { StyleSheet, View, } from 'react-native';
+import { registerRootComponent } from 'expo';
+import TodoInput from './components/TodoInput';
+import TodoList from './components/TodoList';
 export default function App() {
+  const [todoList, setTodoList] = useState([])
+  function addTodoHandler(todoText) {
+    setTodoList((prevTodoList) =>
+      [...prevTodoList, { key: Math.random().toString(), text: todoText }])
+  }
+
+  function deleteTodoHandler(key) {
+    setTodoList((prevTodoList) => prevTodoList.filter(todo => todo.key !== key))
+  }
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View style={styles.appContainer}>
+      <TodoInput onAddTodo={addTodoHandler} />
+      <TodoList todoList={todoList} onDeleteTodo={deleteTodoHandler} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  appContainer: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    padding: 50,
+    paddingHorizontal: 16
   },
+
+  todoContainer: {
+    flex: 5
+  },
+
 });
+
+registerRootComponent(App);
