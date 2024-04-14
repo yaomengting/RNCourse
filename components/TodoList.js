@@ -13,7 +13,9 @@ function TodoList({ todoList, onDeleteTodo }) {
             onDeleteTodo={() => onDeleteTodo(item.key)}
           />
         )}
+        keyExtractor={item => item.key.toString()} 
         alwaysBounceHorizontal={false}
+        contentContainerStyle={styles.listContent} 
       />
     </View>
   );
@@ -21,7 +23,12 @@ function TodoList({ todoList, onDeleteTodo }) {
 
 const styles = StyleSheet.create({
   listContainer: {
-    flex: 5
+    flex: 1,
+    paddingHorizontal: 10,
+    paddingVertical: 8
+  },
+  listContent: {
+    paddingBottom: 8
   }
 });
 

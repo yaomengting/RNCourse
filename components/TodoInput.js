@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
-import { Button, StyleSheet, View, TextInput } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { Button } from 'react-native-paper';
+import { TextInput } from 'react-native-paper';
 export default function TodoInput({ onAddTodo }) {
   const [todoText, setTodoText] = useState('');
 
@@ -8,18 +10,30 @@ export default function TodoInput({ onAddTodo }) {
   }
 
   function handleAddButton() {
-    onAddTodo(todoText);
-    setTodoText('')
+    if(todoText.trim() !== ''){
+      onAddTodo(todoText);
+      setTodoText('')
+    }
+    
   }
 
 
   return (
     <View style={styles.inputContainer}>
       <TextInput
+        mode='outlined'
         style={styles.textInput}
-        placeholder='what should be done?'
+        value={todoText}
+        label='what should be done?'
+        theme={{ roundness: 10 }} 
         onChangeText={todoInputHandler} />
-      <Button title='Add To do' onPress={handleAddButton} />
+      <Button
+        onPress={handleAddButton}
+        mode='contained'
+        style={styles.button}
+         >
+        Add To do
+      </Button>
     </View>
   )
 }
@@ -28,15 +42,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 24,
-    borderBottomWidth: 1,
-    borderBottomColor: "#cccccc"
+    padding: 10
   },
   textInput: {
-    borderWidth: 1,
-    borderColor: "#cccccc",
-    width: "70%",
+    flex: 1,
     marginRight: 8,
-    padding: 8
   },
 })
